@@ -5,6 +5,9 @@ $('document').ready(function() {
 	var timerInterval;
 	var clicknumber_pause = 0,
 		clciknumber_count = 0;
+	var text = '';
+
+	function addZeroToTime() {
 		if (msec < 10) {
 			msec = '0' + msec;
 		}
@@ -15,9 +18,12 @@ $('document').ready(function() {
 			min = '0' + min;
 		}
 		text = min + ':' + sec + ':' + msec;
+		msec = parseInt(msec);
+		sec = parseInt(sec);
+		min = parseInt(min);
+	}
 
 	function timer() {
-		var text = '';
 		if (msec == 99) {
 			if (sec == 60) {
 				min += 1;
@@ -27,20 +33,9 @@ $('document').ready(function() {
 			msec = 0;
 		}
 		msec += 1;
-		if (msec < 10) {
-			msec = '0' + msec;
-		}
-		if (sec < 10) {
-			sec = '0' + sec;
-		}
-		if (min < 10) {
-			min = '0' + min;
-		}
-		text = min + ':' + sec + ':' + msec;
+		addZeroToTime();
 		$('h1').text(text);
-		msec = parseInt(msec);
-		sec = parseInt(sec);
-		min = parseInt(min);
+
 	}
 	$('#reset').click(function() {
 		clearInterval(timerInterval);
@@ -56,20 +51,9 @@ $('document').ready(function() {
 	$('#start').click(function() {
 		if (clicknumber_pause % 2) {
 			clearInterval(timerInterval);
-			if (msec < 10) {
-				msec = '0' + msec;
-			}
-			if (sec < 10) {
-				sec = '0' + sec;
-			}
-			if (min < 10) {
-				min = '0' + min;
-			}
-			text = min + ':' + sec + ':' + msec;
+			addZeroToTime();
 			$('h1').text(text);
-			msec = parseInt(msec);
-			sec = parseInt(sec);
-			min = parseInt(min);
+
 			$(this).text('start');
 		} else {
 			timerInterval = setInterval(timer, 10);
@@ -79,29 +63,21 @@ $('document').ready(function() {
 	});
 	$('#count').click(function() {
 		clciknumber_count++;
-		if (msec < 10) {
-			msec = '0' + msec;
-		}
-		if (sec < 10) {
-			sec = '0' + sec;
-		}
-		if (min < 10) {
-			min = '0' + min;
-		}
-		text = min + ':' + sec + ':' + msec;
+		addZeroToTime();
 		$('h1').text(text);
-		msec = parseInt(msec);
-		sec = parseInt(sec);
-		min = parseInt(min);
-		var grade_table = '<tr><td>' + clciknumber_count + '</td><td>' + text + '</td></tr>';
-		var grade_div = '<p>' + clciknumber_count + ' ' + text + '</p>';
-		$('#result').append(grade_table);
+
+		// var grade_table = '<tr><td>' + clciknumber_count + '</td><td>' + text + '</td></tr>';
+		var grade_div = '<p><span class="order">' + clciknumber_count + '</span> <span class="time">' + text + '</span></p>';
+		// $('#result').append(grade_table);
 		$('#grade').append(grade_div);
 	});
-$('#show').click(function(){
-	$('#timer').detach();
-	var nameForStudent = '<sapn>'+text+'</span>';
-	$('#input_grade').append(nameForStudent);
-});
-
+	$('#show').click(function() {
+		var i = 0;
+		var time = $('#grade p .time');
+		var order = $('#grade p .order');
+		$('#timer').detach();
+		alert(time.first().text());
+		var nameForStudent = '<sapn>' + time.first().text() + '</span>';
+		$('#input_grade').append(nameForStudent);
+	});
 });
