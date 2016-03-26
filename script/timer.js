@@ -76,8 +76,25 @@ $('document').ready(function() {
 		var time = $('#grade p .time');
 		var order = $('#grade p .order');
 		$('#timer').detach();
-		alert(time.first().text());
-		var nameForStudent = '<sapn>' + time.first().text() + '</span>';
-		$('#input_grade').append(nameForStudent);
+		var nameForStudent = '<sapn>' + time.eq(i).text() + '</span>';
+		$('#input_name').append(nameForStudent);
+		// var item = "<tr><td>"+i+'</td><td>'+time.eq(i).text()+'</td><td>'+name+'</td></tr>';
+		// $('#result').append(item);
+		$('#toNext').click(function(event) {
+			/* Act on the event */
+			if (i < time.length) {
+				var name = $('#input_name input').val();
+				var item = "<tr><td>" + (i + 1) + '</td><td>' + time.eq(i).text() + '</td><td>' + name + '</td></tr>';
+				$('#result').append(item);
+				i++;
+				$('#input_name input').val('');
+			}
+		});
 	});
+	// $('#toNext').click(function(event) {
+	// 	/* Act on the event */
+	// 	alert($('#input_name input').val());
+	// 	var item = "<tr><td>"+i+'</td><td>'+time.eq(i).text()+'</td><td>'+name+'</td></tr>';
+	// 	$('#result').append(item);
+	// });
 });
