@@ -76,6 +76,7 @@ $('document').ready(function() {
 		$('#grade').append(grade_div);
 	});
 	$('#show').click(function() {
+		$('#grade').hide();
 		$('#show').addClass('disabled');
 		$('#count').addClass('disabled');
 		$('#start').addClass('disabled');
