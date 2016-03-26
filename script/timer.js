@@ -48,6 +48,9 @@ $('document').ready(function() {
 		$('#result').empty();
 		$('#grade').empty();
 		$('#input_name div').remove();
+		$('#show').removeClass('disabled');
+		$('#start').removeClass('disabled');
+		$('#count').removeClass('disabled');
 	});
 	$('#start').click(function() {
 		if (clicknumber_pause % 2) {
@@ -68,15 +71,17 @@ $('document').ready(function() {
 		$('h1').text(text);
 
 		// var grade_table = '<tr><td>' + clciknumber_count + '</td><td>' + text + '</td></tr>';
-		var grade_div = '<p><span class="order">' + clciknumber_count + '</span> <span class="time">' + text + '</span></p>';
+		var grade_div = '<tr><td class="order">No.' + clciknumber_count + '</td> <td class="time">' + text + '</td></tr>';
 		// $('#result').append(grade_table);
 		$('#grade').append(grade_div);
 	});
 	$('#show').click(function() {
 		$('#show').addClass('disabled');
+		$('#count').addClass('disabled');
+		$('#start').addClass('disabled');
 		var i = 0;
-		var time = $('#grade p .time');
-		var order = $('#grade p .order');
+		var time = $('#grade tr .time');
+		var order = $('#grade tr .order');
 		var nameForStudent = '<div>' + time.eq(i).text() + '</div>';
 		$('#input_name').append(nameForStudent);
 		// var item = "<tr><td>"+i+'</td><td>'+time.eq(i).text()+'</td><td>'+name+'</td></tr>';
@@ -86,7 +91,7 @@ $('document').ready(function() {
 			if (i < time.length) {
 				var name = $('#input_name input').val();
 				if (name) {
-					var item = "<tr><td>" + (i + 1) + '</td><td>' + time.eq(i).text() + '</td><td>' + name + '</td></tr>';
+					var item = "<tr><td>No." + (i + 1) + '</td><td>' + time.eq(i).text() + '</td><td>' + name + '</td></tr>';
 					$('#result').append(item);
 					i++;
 					nameForStudent = '<div>' + time.eq(i).text() + '</div>';
