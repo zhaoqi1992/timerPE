@@ -47,6 +47,7 @@ $('document').ready(function() {
 		$('#start').text('start');
 		$('#result').empty();
 		$('#grade').empty();
+		$('#input_name').empty();
 	});
 	$('#start').click(function() {
 		if (clicknumber_pause % 2) {
@@ -72,11 +73,11 @@ $('document').ready(function() {
 		$('#grade').append(grade_div);
 	});
 	$('#show').click(function() {
+		$('#show').addClass('disabled');
 		var i = 0;
 		var time = $('#grade p .time');
 		var order = $('#grade p .order');
-		$('#timer').detach();
-		var nameForStudent = '<sapn>' + time.eq(i).text() + '</span>';
+		var nameForStudent = '<div>' + time.eq(i).text() + '</div>';
 		$('#input_name').append(nameForStudent);
 		// var item = "<tr><td>"+i+'</td><td>'+time.eq(i).text()+'</td><td>'+name+'</td></tr>';
 		// $('#result').append(item);
@@ -84,12 +85,19 @@ $('document').ready(function() {
 			/* Act on the event */
 			if (i < time.length) {
 				var name = $('#input_name input').val();
-				var item = "<tr><td>" + (i + 1) + '</td><td>' + time.eq(i).text() + '</td><td>' + name + '</td></tr>';
-				$('#result').append(item);
-				i++;
-				$('#input_name input').val('');
+				if (name) {
+					var item = "<tr><td>" + (i + 1) + '</td><td>' + time.eq(i).text() + '</td><td>' + name + '</td></tr>';
+					$('#result').append(item);
+					i++;
+					nameForStudent = '<div>' + time.eq(i).text() + '</div>';
+					$('#input_name div').replaceWith(nameForStudent);
+					$('#input_name input').val('');
+				}
 			}
 		});
+	});
+	$('#Ok').click(function() {
+		$('#show').removeClass('disabled');
 	});
 	// $('#toNext').click(function(event) {
 	// 	/* Act on the event */
