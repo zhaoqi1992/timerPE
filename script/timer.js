@@ -47,7 +47,7 @@ $('document').ready(function() {
 		$('#start').text('start');
 		$('#result').empty();
 		$('#grade').empty();
-		$('#input_name').empty();
+		$('#input_name div').remove();
 	});
 	$('#start').click(function() {
 		if (clicknumber_pause % 2) {
@@ -99,10 +99,4 @@ $('document').ready(function() {
 	$('#Ok').click(function() {
 		$('#show').removeClass('disabled');
 	});
-	// $('#toNext').click(function(event) {
-	// 	/* Act on the event */
-	// 	alert($('#input_name input').val());
-	// 	var item = "<tr><td>"+i+'</td><td>'+time.eq(i).text()+'</td><td>'+name+'</td></tr>';
-	// 	$('#result').append(item);
-	// });
 });

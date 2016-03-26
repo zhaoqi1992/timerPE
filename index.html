@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width:device-width,initial-scale=1">
 	<title>timer</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body>
 	<div id="timer">
@@ -15,9 +16,11 @@
 		<button class="btn" id="show">show</button>
 		<button class="btn" id="reset">reset</button>
 	</div>
-	<table id="result">
+	<div class="table table-responsive table-striped">
+	<table id="result" class="table">
 	<thead>成绩</thead>
 	</table>
+	</div>
 	<div id="input_name">
 		<input type="text" placeholder="请输入姓名">
 		<button class="btn" id="toNext">next</button>
@@ -25,6 +28,7 @@
 	</div>
 	<div id="grade"></div>
 	<script type="text/javascript" src="script/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="script/bootstrap.min.js"></script>
 	<script type="text/javascript" src="script/timer.js"></script>
 </body>
 </html>
