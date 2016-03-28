@@ -33,6 +33,7 @@ $('document').ready(function() {
 			var tableName = $(this).text();
 			var table = localStorage.getItem(tableName);
 			table = JSON.parse(table);
+			$('#result').append('<tr><td>'+tableName+'</td></tr>');
 			for (var i = 0; i < table.length; i++) {
 				var name = table[i].name;
 				var order = table[i].order;
@@ -40,16 +41,21 @@ $('document').ready(function() {
 				var item = "<tr><td>No." + order + '</td><td>' + grade + '</td><td>' + name + '</td></tr>';
 				$('#result').append(item);
 			}
-			// var deleteButton = '<button class="btn deleteTable">delete</button>';
-			// $('#result').append(deleteButton);
-			// localStorage.removeItem(tableName);
-			// $('button .deleteTable').click(function() {
-			// 	var p = history.indexOf(tableName);
-			// 	history.splice(p-1, tableName.length+1);
-			// 	alert(history);
-			// 	localStorage.setItem(history);
-			// 	alert('delete'+tableName);
-			// });
+			$('#result').append('<button id="deleteButton">'+'删除'+'</button>');
+			$('#deleteButton').click(function(event) {
+				$('#mymodal').modal('toggle');
+				$('#continueDelete').click(function(){
+					for (var i = 0; i < historyItem.length; i++) {
+						if(historyItem[i] == tableName){
+							historyItem.splice(i,1);
+						}
+					}
+					var history = historyItem.join(',');
+					localStorage.setItem('history',history);
+					localStorage.removeItem(tableName);
+					$('.modal-body p').text('删除成功');
+				});
+			});
 		});
 	}
 
@@ -169,9 +175,9 @@ $('document').ready(function() {
 			localStorage.setItem('history', history);
 			var storageStydentList = JSON.stringify(studentList);
 			localStorage.setItem(newTittle, storageStydentList);
-			if (newTittle) {
-				$('#history').append('<li class="list-group-item">' + newTittle + '</li>');
-			}
+			// if (newTittle) {
+			// 	$('#history').append('<li class="list-group-item">' + newTittle + '</li>');
+			// }
 			$('#input_name input#addTittle').val('');
 			listNumber = 0;
 		});
