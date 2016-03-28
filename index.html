@@ -1,36 +1,44 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width:device-width,initial-scale=1">
-	<title>timer</title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width:device-width,initial-scale=1">
+    <title>timer</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
+
 <body>
-	<div id="timer">
-		<h1>00:00:00</h1>
-	</div>
-	<div id= 'btn-group'>
-		<button class="btn" id="start">start</button>
-		<button class="btn" id="count">count</button>
-		<button class="btn" id="show">show</button>
-		<button class="btn" id="reset">reset</button>
-	</div>
-	<div id="input_name">
-		<input type="text" placeholder="请输入姓名">
-		<button class="btn" id="toNext">next</button>
-		<button class="btn" id="Ok">ok</button>
-	</div>
-	<div class="table table-responsive">
-	<table id="result" class="table table-striped">
-	<!-- <thead class="h2">成绩</thead> -->
-	</table>
-	</div>
-	<div class="table-responsive" >
-	<table id="grade" class="table table-striped"></table>
-	</div>
-	<script type="text/javascript" src="script/jquery-1.12.0.min.js"></script>
-	<script type="text/javascript" src="script/bootstrap.min.js"></script>
-	<script type="text/javascript" src="script/timer.js"></script>
+    <div id="timer">
+        <h1>00:00:00</h1>
+    </div>
+    <div id='btn-group'>
+        <button class="btn" id="start">start</button>
+        <button class="btn" id="count">count</button>
+        <button class="btn" id="show">show</button>
+        <button class="btn" id="reset">reset</button>
+        <button class="btn" id="showHistory">history</button>
+    </div>
+    <div id="input_name">
+        <input type="text" placeholder="请输入表单名" id="addTittle">
+        <input type="text" placeholder="请输入姓名" id="addName">
+        <button class="btn" id="toNext">next</button>
+        <button class="btn" id="Ok">ok</button>
+    </div>
+    <div class="table table-responsive">
+        <table id="result" class="table table-striped">
+            <!-- <thead class="h2">成绩</thead> -->
+        </table>
+    </div>
+    <div class="table-responsive">
+        <table id="grade" class="table table-striped"></table>
+    </div>
+    <ul class="list-group" id="history">
+    	<!-- <li class="historyItem">hello</li> -->
+    </ul>
+    <script type="text/javascript" src="script/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="script/bootstrap.min.js"></script>
+    <script type="text/javascript" src="script/timer.js"></script>
 </body>
+
 </html>
