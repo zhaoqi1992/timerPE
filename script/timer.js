@@ -9,6 +9,8 @@ $('document').ready(function() {
 	var listNumber = 0;
 	var studentList = new Array();
 	$('#Ok').attr('disabled', 'disabled');
+	$('div#input_name').hide();
+	$('#show').attr('disabled', 'disabled');
 
 	function Student(name, order, grade) {
 		this.name = name;
@@ -34,7 +36,7 @@ $('document').ready(function() {
 			var tableName = $(this).text();
 			var table = localStorage.getItem(tableName);
 			table = JSON.parse(table);
-			$('#result').append('<tr><td>'+tableName+'</td></tr>');
+			$('#result').append('<tr><td>' + tableName + '</td></tr>');
 			for (var i = 0; i < table.length; i++) {
 				var name = table[i].name;
 				var order = table[i].order;
@@ -42,17 +44,17 @@ $('document').ready(function() {
 				var item = "<tr><td>No." + order + '</td><td>' + grade + '</td><td>' + name + '</td></tr>';
 				$('#result').append(item);
 			}
-			$('#result').append('<button id="deleteButton">'+'删除'+'</button>');
+			$('#result').append('<button id="deleteButton">' + '删除' + '</button>');
 			$('#deleteButton').click(function(event) {
 				$('#mymodal').modal('toggle');
-				$('#continueDelete').click(function(){
+				$('#continueDelete').click(function() {
 					for (var i = 0; i < historyItem.length; i++) {
-						if(historyItem[i] == tableName){
-							historyItem.splice(i,1);
+						if (historyItem[i] == tableName) {
+							historyItem.splice(i, 1);
 						}
 					}
 					var history = historyItem.join(',');
-					localStorage.setItem('history',history);
+					localStorage.setItem('history', history);
 					localStorage.removeItem(tableName);
 					$('.modal-body p').text('删除成功');
 				});
@@ -112,15 +114,16 @@ $('document').ready(function() {
 		window.location.reload();
 	});
 	$('#start').click(function() {
+		$('#show').removeAttr('disabled', 'disabled');
 		if (clicknumber_pause % 2) {
 			clearInterval(timerInterval);
 			addZeroToTime();
 			$('h1').text(text);
 
-			$(this).text('start');
+			$(this).text('开始');
 		} else {
 			timerInterval = setInterval(timer, 10);
-			$(this).text('pause');
+			$(this).text('结束');
 		}
 		clicknumber_pause++;
 	});
@@ -134,6 +137,7 @@ $('document').ready(function() {
 		$('#grade').append(grade_div);
 	});
 	$('#show').click(function() {
+		$('div#input_name').show();
 		$('#grade').hide();
 		$('#show').attr('disabled', 'disabled');
 		$('#count').attr('disabled', 'disabled');
