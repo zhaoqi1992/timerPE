@@ -17,6 +17,7 @@ $('document').ready(function() {
 	}
 
 	function getHistory() {
+		$('.modal-body p').text('确认删除？');
 		var history = localStorage.getItem('history');
 		if (!history) {
 			history = '';
@@ -90,24 +91,25 @@ $('document').ready(function() {
 
 	}
 	$('#reset').click(function() {
-		clearInterval(timerInterval);
-		msec = 0;
-		sec = 0;
-		min = 0;
-		clicknumber_count = 0;
-		listNumber = 0;
-		$('h1').text('00:00:00');
-		$('#start').text('start');
-		$('#result').empty();
-		$('#grade').empty().show();
-		$('#history').empty();
-		$('#input_name div').remove();
-		$('#show').removeAttr('disabled');
-		$('#start').removeAttr('disabled');
-		$('#count').removeAttr('disabled');
-		$('#toNext').removeAttr('disabled');
-		$('#Ok').removeAttr('disabled');
-		studentList = new Array();
+		// clearInterval(timerInterval);
+		// msec = 0;
+		// sec = 0;
+		// min = 0;
+		// clicknumber_count = 0;
+		// listNumber = 0;
+		// $('h1').text('00:00:00');
+		// $('#start').text('start');
+		// $('#result').empty();
+		// $('#grade').empty().show();
+		// $('#history').empty();
+		// $('#input_name div').remove();
+		// $('#show').removeAttr('disabled');
+		// $('#start').removeAttr('disabled');
+		// $('#count').removeAttr('disabled');
+		// $('#toNext').removeAttr('disabled');
+		// $('#Ok').removeAttr('disabled');
+		// studentList = new Array();
+		window.location.reload();
 	});
 	$('#start').click(function() {
 		if (clicknumber_pause % 2) {
