@@ -11,6 +11,8 @@ $('document').ready(function() {
 	$('#Ok').attr('disabled', 'disabled');
 	$('div#input_name').hide();
 	$('#show').attr('disabled', 'disabled');
+	$('#result').hide();
+	$('#grade').hide();
 
 	function Student(name, order, grade) {
 		this.name = name;
@@ -19,16 +21,18 @@ $('document').ready(function() {
 	}
 
 	function getHistory() {
+		$('#history').show();
+		$('div#input_name').hide();
 		$('.modal-body p').text('确认删除？');
 		var history = localStorage.getItem('history');
 		if (!history) {
 			history = '';
 		}
 		$('#history').empty().show();
-		$('#result').empty();
+		$('#result').empty().show();
 		var historyItem = history.split(',');
 		for (var j = 1; j < historyItem.length; j++) {
-			var newTitle = '<li class="list-group-item historyItem btn text-info h3">' + historyItem[j] + '</li>';
+			var newTitle = '<li class="list-group-item list-group-item-success historyItem btn text-info h3">' + historyItem[j] + '</li>';
 			$('#history').append(newTitle);
 		}
 		$('li.historyItem').click(function() {
@@ -36,7 +40,7 @@ $('document').ready(function() {
 			var tableName = $(this).text();
 			var table = localStorage.getItem(tableName);
 			table = JSON.parse(table);
-			$('#result').append('<tr class="text-info h3"><td>' + tableName + '</td></tr>');
+			$('#result').append('<tr class="text-info h3"><td>' + tableName + '</td><td></td><td></td></tr>');
 			for (var i = 0; i < table.length; i++) {
 				var name = table[i].name;
 				var order = table[i].order;
@@ -44,7 +48,7 @@ $('document').ready(function() {
 				var item = "<tr class='text-info h4'><td>No." + order + '</td><td>' + grade + '</td><td>' + name + '</td></tr>';
 				$('#result').append(item);
 			}
-			$('#result').append('<button id="deleteButton">' + '删除' + '</button>');
+			$('#result').append('<button id="deleteButton" class="btn btn-danger">' + '删除' + '</button>');
 			$('#deleteButton').click(function(event) {
 				$('#mymodal').modal('toggle');
 				$('#continueDelete').click(function() {
@@ -93,27 +97,32 @@ $('document').ready(function() {
 
 	}
 	$('#reset').click(function() {
-		// clearInterval(timerInterval);
-		// msec = 0;
-		// sec = 0;
-		// min = 0;
-		// clicknumber_count = 0;
-		// listNumber = 0;
-		// $('h1').text('00:00:00');
-		// $('#start').text('start');
-		// $('#result').empty();
-		// $('#grade').empty().show();
-		// $('#history').empty();
-		// $('#input_name div').remove();
-		// $('#show').removeAttr('disabled');
-		// $('#start').removeAttr('disabled');
-		// $('#count').removeAttr('disabled');
-		// $('#toNext').removeAttr('disabled');
-		// $('#Ok').removeAttr('disabled');
-		// studentList = new Array();
-		window.location.reload();
+		clearInterval(timerInterval);
+		msec = 0;
+		sec = 0;
+		min = 0;
+		clicknumber_count = 0;
+		clicknumber_pause = 0;
+		listNumber = 0;
+		$('h1').text('00:00:00');
+		$('#start').text('开始');
+		$('#result').empty();
+		$('#grade').empty();
+		$('#history').empty();
+		$('#start').removeAttr('disabled');
+		$('#count').removeAttr('disabled');
+		$('#toNext').removeAttr('disabled');
+		studentList = new Array();
+		$('#Ok').attr('disabled', 'disabled');
+		$('div#input_name').hide();
+		$('#show').attr('disabled', 'disabled');
+		$('#result').hide();
+		$('#grade').hide();
+		// window.location.reload();
 	});
 	$('#start').click(function() {
+		$('#result').hide();
+		$('#history').hide();
 		$('#show').removeAttr('disabled', 'disabled');
 		if (clicknumber_pause % 2) {
 			clearInterval(timerInterval);
@@ -128,6 +137,7 @@ $('document').ready(function() {
 		clicknumber_pause++;
 	});
 	$('#count').click(function() {
+		$('#grade').show();
 		clicknumber_count++;
 		addZeroToTime();
 		$('h1').text(text);
@@ -137,6 +147,7 @@ $('document').ready(function() {
 		$('#grade').append(grade_div);
 	});
 	$('#show').click(function() {
+		$('#result').show();
 		$('div#input_name').show();
 		$('#grade').hide();
 		$('#show').attr('disabled', 'disabled');
@@ -170,6 +181,7 @@ $('document').ready(function() {
 			}
 		});
 		$('#Ok').click(function() {
+			if ($('#input_name input#addTittle').val()) {
 			var history = localStorage.getItem('history');
 			if (!history) {
 				history = '';
@@ -186,6 +198,7 @@ $('document').ready(function() {
 			// }
 			$('#input_name input#addTittle').val('');
 			listNumber = 0;
+			}
 		});
 	});
 	$('#showHistory').click(getHistory);
