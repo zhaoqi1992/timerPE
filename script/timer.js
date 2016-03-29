@@ -121,9 +121,11 @@ $('#history').hide();
 		$('#divForResult').hide();
 		$('#divForGrade').hide();
 		$('#count').attr('disabled','disabled');
+		$('#showHistory').removeAttr('disabled');
 		// window.location.reload();
 	});
 	$('#start').click(function() {
+		$('#showHistory').attr('disabled','disabled');
 		$('#count').removeAttr('disabled');
 		$('#divForResult').hide();
 		$('#history').hide();
@@ -151,6 +153,7 @@ $('#history').hide();
 		$('#grade').append(grade_div);
 	});
 	$('#show').click(function() {
+		$('#showHistory').removeAttr('disabled');
 		$('#divForResult').show();
 		$('div#input_name').show();
 		$('#divForGrade').hide();
