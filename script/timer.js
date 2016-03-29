@@ -28,7 +28,7 @@ $('document').ready(function() {
 		$('#result').empty();
 		var historyItem = history.split(',');
 		for (var j = 1; j < historyItem.length; j++) {
-			var newTitle = '<li class="list-group-item historyItem btn">' + historyItem[j] + '</li>';
+			var newTitle = '<li class="list-group-item historyItem btn text-info h3">' + historyItem[j] + '</li>';
 			$('#history').append(newTitle);
 		}
 		$('li.historyItem').click(function() {
@@ -36,12 +36,12 @@ $('document').ready(function() {
 			var tableName = $(this).text();
 			var table = localStorage.getItem(tableName);
 			table = JSON.parse(table);
-			$('#result').append('<tr><td>' + tableName + '</td></tr>');
+			$('#result').append('<tr class="text-info h3"><td>' + tableName + '</td></tr>');
 			for (var i = 0; i < table.length; i++) {
 				var name = table[i].name;
 				var order = table[i].order;
 				var grade = table[i].grade;
-				var item = "<tr><td>No." + order + '</td><td>' + grade + '</td><td>' + name + '</td></tr>';
+				var item = "<tr class='text-info h4'><td>No." + order + '</td><td>' + grade + '</td><td>' + name + '</td></tr>';
 				$('#result').append(item);
 			}
 			$('#result').append('<button id="deleteButton">' + '删除' + '</button>');
@@ -145,8 +145,8 @@ $('document').ready(function() {
 		clearInterval(timerInterval);
 		var time = $('#grade tr .time');
 		var order = $('#grade tr .order');
-		var gradeForStudent = '<p class="h3 text-infp">' + time.eq(listNumber).text() + '</p>';
-		$('#input_name').append(gradeForStudent);
+		var gradeForStudent = '<h1>' + time.eq(listNumber).text() + '</h1>';
+		$('h1').replaceWith(gradeForStudent);
 		// var item = "<tr><td>"+i+'</td><td>'+time.eq(i).text()+'</td><td>'+name+'</td></tr>';
 		// $('#result').append(item);
 		$('#toNext').click(function(event) {
@@ -154,13 +154,13 @@ $('document').ready(function() {
 			if (listNumber < time.length) {
 				var name = $('#input_name input#addName').val();
 				if (name) {
-					var item = "<tr><td>No." + (listNumber + 1) + '</td><td>' + time.eq(listNumber).text() + '</td><td>' + name + '</td></tr>';
+					var item = "<tr class='text-info h4'><td>No." + (listNumber + 1) + '</td><td>' + time.eq(listNumber).text() + '</td><td>' + name + '</td></tr>';
 					$('#result').append(item);
 					var newStudent = new Student(name, listNumber + 1, time.eq(listNumber).text());
 					studentList.push(newStudent);
 					listNumber++;
-					gradeForStudent = '<p class="h3 text-info">' + time.eq(listNumber).text() + '</p>';
-					$('#input_name p').replaceWith(gradeForStudent);
+					gradeForStudent = '<h1>' + time.eq(listNumber).text() + '</h1>';
+					$('h1').replaceWith(gradeForStudent);
 					$('#input_name input#addName').val('');
 				}
 			}

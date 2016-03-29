@@ -9,6 +9,10 @@ $('document').ready(function() {
 	var listNumber = 0;
 	var studentList = new Array();
 	$('#Ok').attr('disabled', 'disabled');
+	$('div#input_name').hide();
+	$('#show').attr('disabled', 'disabled');
+	$('#result').hide();
+	$('#grade').hide();
 
 	function Student(name, order, grade) {
 		this.name = name;
@@ -17,16 +21,18 @@ $('document').ready(function() {
 	}
 
 	function getHistory() {
+		$('#history').show();
+		$('div#input_name').hide();
 		$('.modal-body p').text('确认删除？');
 		var history = localStorage.getItem('history');
 		if (!history) {
 			history = '';
 		}
 		$('#history').empty().show();
-		$('#result').empty();
+		$('#result').empty().show();
 		var historyItem = history.split(',');
 		for (var j = 1; j < historyItem.length; j++) {
-			var newTitle = '<li class="list-group-item historyItem btn">' + historyItem[j] + '</li>';
+			var newTitle = '<li class="list-group-item list-group-item-success historyItem btn text-info h3">' + historyItem[j] + '</li>';
 			$('#history').append(newTitle);
 		}
 		$('li.historyItem').click(function() {
@@ -34,25 +40,25 @@ $('document').ready(function() {
 			var tableName = $(this).text();
 			var table = localStorage.getItem(tableName);
 			table = JSON.parse(table);
-			$('#result').append('<tr><td>'+tableName+'</td></tr>');
+			$('#result').append('<tr class="text-info h3"><td>' + tableName + '</td></tr>');
 			for (var i = 0; i < table.length; i++) {
 				var name = table[i].name;
 				var order = table[i].order;
 				var grade = table[i].grade;
-				var item = "<tr><td>No." + order + '</td><td>' + grade + '</td><td>' + name + '</td></tr>';
+				var item = "<tr class='text-info h4'><td>No." + order + '</td><td>' + grade + '</td><td>' + name + '</td></tr>';
 				$('#result').append(item);
 			}
-			$('#result').append('<button id="deleteButton">'+'删除'+'</button>');
+			$('#result').append('<button id="deleteButton" class="btn btn-danger">' + '删除' + '</button>');
 			$('#deleteButton').click(function(event) {
 				$('#mymodal').modal('toggle');
-				$('#continueDelete').click(function(){
+				$('#continueDelete').click(function() {
 					for (var i = 0; i < historyItem.length; i++) {
-						if(historyItem[i] == tableName){
-							historyItem.splice(i,1);
+						if (historyItem[i] == tableName) {
+							historyItem.splice(i, 1);
 						}
 					}
 					var history = historyItem.join(',');
-					localStorage.setItem('history',history);
+					localStorage.setItem('history', history);
 					localStorage.removeItem(tableName);
 					$('.modal-body p').text('删除成功');
 				});
@@ -91,49 +97,57 @@ $('document').ready(function() {
 
 	}
 	$('#reset').click(function() {
-		// clearInterval(timerInterval);
-		// msec = 0;
-		// sec = 0;
-		// min = 0;
-		// clicknumber_count = 0;
-		// listNumber = 0;
-		// $('h1').text('00:00:00');
-		// $('#start').text('start');
-		// $('#result').empty();
-		// $('#grade').empty().show();
-		// $('#history').empty();
-		// $('#input_name div').remove();
-		// $('#show').removeAttr('disabled');
-		// $('#start').removeAttr('disabled');
-		// $('#count').removeAttr('disabled');
-		// $('#toNext').removeAttr('disabled');
-		// $('#Ok').removeAttr('disabled');
-		// studentList = new Array();
-		window.location.reload();
+		clearInterval(timerInterval);
+		msec = 0;
+		sec = 0;
+		min = 0;
+		clicknumber_count = 0;
+		clicknumber_pause = 0;
+		listNumber = 0;
+		$('h1').text('00:00:00');
+		$('#start').text('开始');
+		$('#result').empty();
+		$('#grade').empty();
+		$('#history').empty();
+		$('#start').removeAttr('disabled');
+		$('#count').removeAttr('disabled');
+		$('#toNext').removeAttr('disabled');
+		studentList = new Array();
+		$('#Ok').attr('disabled', 'disabled');
+		$('div#input_name').hide();
+		$('#show').attr('disabled', 'disabled');
+		$('#result').hide();
+		$('#grade').hide();
+		// window.location.reload();
 	});
 	$('#start').click(function() {
+		$('#history').hide();
+		$('#show').removeAttr('disabled', 'disabled');
 		if (clicknumber_pause % 2) {
 			clearInterval(timerInterval);
 			addZeroToTime();
 			$('h1').text(text);
 
-			$(this).text('start');
+			$(this).text('开始');
 		} else {
 			timerInterval = setInterval(timer, 10);
-			$(this).text('pause');
+			$(this).text('结束');
 		}
 		clicknumber_pause++;
 	});
 	$('#count').click(function() {
+		$('#grade').show();
 		clicknumber_count++;
 		addZeroToTime();
 		$('h1').text(text);
 		// var grade_table = '<tr><td>' + clicknumber_count + '</td><td>' + text + '</td></tr>';
-		var grade_div = '<tr><td class="order">No.' + clicknumber_count + '</td> <td class="time">' + text + '</td></tr>';
+		var grade_div = '<tr class="text-info h4"><td class="order">No.' + clicknumber_count + '</td> <td class="time">' + text + '</td></tr>';
 		// $('#result').append(grade_table);
 		$('#grade').append(grade_div);
 	});
 	$('#show').click(function() {
+		$('#result').show();
+		$('div#input_name').show();
 		$('#grade').hide();
 		$('#show').attr('disabled', 'disabled');
 		$('#count').attr('disabled', 'disabled');
@@ -141,8 +155,8 @@ $('document').ready(function() {
 		clearInterval(timerInterval);
 		var time = $('#grade tr .time');
 		var order = $('#grade tr .order');
-		var gradeForStudent = '<div>' + time.eq(listNumber).text() + '</div>';
-		$('#input_name').append(gradeForStudent);
+		var gradeForStudent = '<h1>' + time.eq(listNumber).text() + '</h1>';
+		$('h1').replaceWith(gradeForStudent);
 		// var item = "<tr><td>"+i+'</td><td>'+time.eq(i).text()+'</td><td>'+name+'</td></tr>';
 		// $('#result').append(item);
 		$('#toNext').click(function(event) {
@@ -150,13 +164,13 @@ $('document').ready(function() {
 			if (listNumber < time.length) {
 				var name = $('#input_name input#addName').val();
 				if (name) {
-					var item = "<tr><td>No." + (listNumber + 1) + '</td><td>' + time.eq(listNumber).text() + '</td><td>' + name + '</td></tr>';
+					var item = "<tr class='text-info h4'><td>No." + (listNumber + 1) + '</td><td>' + time.eq(listNumber).text() + '</td><td>' + name + '</td></tr>';
 					$('#result').append(item);
 					var newStudent = new Student(name, listNumber + 1, time.eq(listNumber).text());
 					studentList.push(newStudent);
 					listNumber++;
-					gradeForStudent = '<div>' + time.eq(listNumber).text() + '</div>';
-					$('#input_name div').replaceWith(gradeForStudent);
+					gradeForStudent = '<h1>' + time.eq(listNumber).text() + '</h1>';
+					$('h1').replaceWith(gradeForStudent);
 					$('#input_name input#addName').val('');
 				}
 			}
@@ -166,6 +180,7 @@ $('document').ready(function() {
 			}
 		});
 		$('#Ok').click(function() {
+			if ($('#input_name input#addTittle').val()) {
 			var history = localStorage.getItem('history');
 			if (!history) {
 				history = '';
@@ -182,6 +197,7 @@ $('document').ready(function() {
 			// }
 			$('#input_name input#addTittle').val('');
 			listNumber = 0;
+			}
 		});
 	});
 	$('#showHistory').click(getHistory);
