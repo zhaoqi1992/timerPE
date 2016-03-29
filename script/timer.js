@@ -140,7 +140,7 @@ $('#history').hide();
 			$(this).text('开始');
 		} else {
 			timerInterval = setInterval(timer, 10);
-			$(this).text('结束');
+			$(this).text('暂停');
 		}
 		clicknumber_pause++;
 	});
