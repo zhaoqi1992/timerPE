@@ -125,6 +125,8 @@ $('#history').hide();
 		// window.location.reload();
 	});
 	$('#start').click(function() {
+		$('#result').empty();
+		$('#grade').empty();
 		$('#showHistory').attr('disabled','disabled');
 		$('#count').removeAttr('disabled');
 		$('#divForResult').hide();
