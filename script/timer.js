@@ -156,7 +156,6 @@ $('#history').hide();
 	});
 	$('#show').click(function() {
 		$('#showHistory').removeAttr('disabled');
-		$('#divForResult').show();
 		$('div#input_name').show();
 		$('#divForGrade').hide();
 		$('#show').attr('disabled', 'disabled');
@@ -170,6 +169,7 @@ $('#history').hide();
 		// var item = "<tr><td>"+i+'</td><td>'+time.eq(i).text()+'</td><td>'+name+'</td></tr>';
 		// $('#result').append(item);
 		$('#toNext').click(function(event) {
+			$('#divForResult').show();
 			/* Act on the event */
 			if (listNumber < time.length) {
 				var name = $('#input_name input#addName').val();
