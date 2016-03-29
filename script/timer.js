@@ -11,9 +11,10 @@ $('document').ready(function() {
 	$('#Ok').attr('disabled', 'disabled');
 	$('div#input_name').hide();
 	$('#show').attr('disabled', 'disabled');
-	$('#result').hide();
-	$('#grade').hide();
-
+	$('#divForResult').hide();
+	$('#divForGrade').hide();
+	$('#count').attr('disabled','disabled');
+$('#history').hide();
 	function Student(name, order, grade) {
 		this.name = name;
 		this.order = order;
@@ -21,6 +22,7 @@ $('document').ready(function() {
 	}
 
 	function getHistory() {
+		$('#divForResult').show();
 		$('#history').show();
 		$('div#input_name').hide();
 		$('.modal-body p').text('确认删除？');
@@ -108,7 +110,7 @@ $('document').ready(function() {
 		$('#start').text('开始');
 		$('#result').empty();
 		$('#grade').empty();
-		$('#history').empty();
+		$('#history').empty().hide();
 		$('#start').removeAttr('disabled');
 		$('#count').removeAttr('disabled');
 		$('#toNext').removeAttr('disabled');
@@ -116,12 +118,14 @@ $('document').ready(function() {
 		$('#Ok').attr('disabled', 'disabled');
 		$('div#input_name').hide();
 		$('#show').attr('disabled', 'disabled');
-		$('#result').hide();
-		$('#grade').hide();
+		$('#divForResult').hide();
+		$('#divForGrade').hide();
+		$('#count').attr('disabled','disabled');
 		// window.location.reload();
 	});
 	$('#start').click(function() {
-		$('#result').hide();
+		$('#count').removeAttr('disabled');
+		$('#divForResult').hide();
 		$('#history').hide();
 		$('#show').removeAttr('disabled', 'disabled');
 		if (clicknumber_pause % 2) {
@@ -137,7 +141,7 @@ $('document').ready(function() {
 		clicknumber_pause++;
 	});
 	$('#count').click(function() {
-		$('#grade').show();
+		$('#divForGrade').show();
 		clicknumber_count++;
 		addZeroToTime();
 		$('h1').text(text);
@@ -147,9 +151,9 @@ $('document').ready(function() {
 		$('#grade').append(grade_div);
 	});
 	$('#show').click(function() {
-		$('#result').show();
+		$('#divForResult').show();
 		$('div#input_name').show();
-		$('#grade').hide();
+		$('#divForGrade').hide();
 		$('#show').attr('disabled', 'disabled');
 		$('#count').attr('disabled', 'disabled');
 		$('#start').attr('disabled', 'disabled');
