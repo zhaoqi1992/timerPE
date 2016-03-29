@@ -132,7 +132,7 @@ $('document').ready(function() {
 		addZeroToTime();
 		$('h1').text(text);
 		// var grade_table = '<tr><td>' + clicknumber_count + '</td><td>' + text + '</td></tr>';
-		var grade_div = '<tr><td class="order">No.' + clicknumber_count + '</td> <td class="time">' + text + '</td></tr>';
+		var grade_div = '<tr class="text-info h4"><td class="order">No.' + clicknumber_count + '</td> <td class="time">' + text + '</td></tr>';
 		// $('#result').append(grade_table);
 		$('#grade').append(grade_div);
 	});
@@ -145,7 +145,7 @@ $('document').ready(function() {
 		clearInterval(timerInterval);
 		var time = $('#grade tr .time');
 		var order = $('#grade tr .order');
-		var gradeForStudent = '<div>' + time.eq(listNumber).text() + '</div>';
+		var gradeForStudent = '<p class="h3 text-infp">' + time.eq(listNumber).text() + '</p>';
 		$('#input_name').append(gradeForStudent);
 		// var item = "<tr><td>"+i+'</td><td>'+time.eq(i).text()+'</td><td>'+name+'</td></tr>';
 		// $('#result').append(item);
@@ -159,8 +159,8 @@ $('document').ready(function() {
 					var newStudent = new Student(name, listNumber + 1, time.eq(listNumber).text());
 					studentList.push(newStudent);
 					listNumber++;
-					gradeForStudent = '<div>' + time.eq(listNumber).text() + '</div>';
-					$('#input_name div').replaceWith(gradeForStudent);
+					gradeForStudent = '<p class="h3 text-info">' + time.eq(listNumber).text() + '</p>';
+					$('#input_name p').replaceWith(gradeForStudent);
 					$('#input_name input#addName').val('');
 				}
 			}
