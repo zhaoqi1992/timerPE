@@ -8,12 +8,13 @@ $('document').ready(function() {
 	var text = '';
 	var listNumber = 0;
 	var studentList = new Array();
-	$('#Ok').attr('disabled', 'disabled');
+	$('#Ok').addClass('disabled');
 	$('div#input_name').hide();
-	$('#show').attr('disabled', 'disabled');
+	$('#show').addClass('disabled');
 	$('#divForResult').hide();
 	$('#divForGrade').hide();
-	$('#count').attr('disabled','disabled');
+	// $('#count').attr('disabled','disabled');
+	$('#count').addClass('disabled');
 $('#history').hide();
 	function Student(name, order, grade) {
 		this.name = name;
@@ -22,7 +23,7 @@ $('#history').hide();
 	}
 
 	function getHistory() {
-		$('#divForResult').show();
+		$('#divForResult').hide();
 		$('#history').show();
 		$('div#input_name').hide();
 		$('.modal-body p').text('确认删除？');
@@ -38,6 +39,7 @@ $('#history').hide();
 			$('#history').append(newTitle);
 		}
 		$('li.historyItem').click(function() {
+			$('#divForResult').show();
 			$('#history').hide();
 			var tableName = $(this).text();
 			var table = localStorage.getItem(tableName);
@@ -50,7 +52,7 @@ $('#history').hide();
 				var item = "<tr class='text-info h4'><td>No." + order + '</td><td>' + grade + '</td><td>' + name + '</td></tr>';
 				$('#result').append(item);
 			}
-			$('#result').append('<button id="deleteButton" class="btn btn-danger">' + '删除' + '</button>');
+			$('#divForResult').append('<button id="deleteButton" class="btn btn-warning btn-lg">' + '删除' + '</button>');
 			$('#deleteButton').click(function(event) {
 				$('#mymodal').modal('toggle');
 				$('#continueDelete').click(function() {
@@ -111,28 +113,27 @@ $('#history').hide();
 		$('#result').empty();
 		$('#grade').empty();
 		$('#history').empty().hide();
-		$('#start').removeAttr('disabled');
-		$('#count').removeAttr('disabled');
-		$('#toNext').removeAttr('disabled');
+		$('#start').removeClass('disabled');
+		$('#toNext').removeClass('disabled');
 		studentList = new Array();
-		$('#Ok').attr('disabled', 'disabled');
+		$('#Ok').addClass('disabled');
 		$('div#input_name').hide();
-		$('#show').attr('disabled', 'disabled');
+		$('#show').addClass('disabled');
 		$('#divForResult').hide();
 		$('#divForGrade').hide();
-		$('#count').attr('disabled','disabled');
-		$('#showHistory').removeAttr('disabled');
+		$('#count').addClass('disabled');
+		$('#showHistory').removeClass('disabled');
 		// window.location.reload();
 	});
 	$('#start').click(function() {
 		$('#result').empty();
-		$('#grade').empty();
-		$('#showHistory').attr('disabled','disabled');
-		$('#count').removeAttr('disabled');
+		$('#showHistory').addClass('disabled');
+		$('#count').removeClass('disabled');
 		$('#divForResult').hide();
 		$('#history').hide();
-		$('#show').removeAttr('disabled', 'disabled');
+		$('#show').removeClass('disabled');
 		if (clicknumber_pause % 2) {
+			$('#grade').empty();
 			clearInterval(timerInterval);
 			addZeroToTime();
 			$('h1').text(text);
@@ -155,12 +156,12 @@ $('#history').hide();
 		$('#grade').append(grade_div);
 	});
 	$('#show').click(function() {
-		$('#showHistory').removeAttr('disabled');
+		$('#showHistory').removeClass('disabled');
 		$('div#input_name').show();
 		$('#divForGrade').hide();
-		$('#show').attr('disabled', 'disabled');
-		$('#count').attr('disabled', 'disabled');
-		$('#start').attr('disabled', 'disabled');
+		$('#show').addClass('disabled');
+		$('#count').addClass('disabled');
+		$('#start').addClass('disabled', 'disabled');
 		clearInterval(timerInterval);
 		var time = $('#grade tr .time');
 		var order = $('#grade tr .order');
@@ -185,8 +186,8 @@ $('#history').hide();
 				}
 			}
 			if (listNumber == time.length) {
-				$('#toNext').attr('disabled', 'disabled');
-				$('#Ok').removeAttr('disabled');
+				$('#toNext').addClass('disabled', 'disabled');
+				$('#Ok').removeClass('disabled');
 			}
 		});
 		$('#Ok').click(function() {
@@ -196,7 +197,7 @@ $('#history').hide();
 				history = '';
 			}
 			$('#input_name input#addName').val('');
-			$('#Ok').attr('disabled', 'disabled');
+			$('#Ok').addClass('disabled', 'disabled');
 			var newTittle = $('#input_name input#addTittle').val();
 			history += ',' + newTittle;
 			localStorage.setItem('history', history);

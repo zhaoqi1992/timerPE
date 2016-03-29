@@ -1,3 +1,1 @@
-body div#body.wrapper{
-	background-color: #e6e6e6;
-}
+body#body.body{// background-color:#e6e6e6}div#btn-group.btn-group{margin-bottom:8%}div#input_name #addName{margin-bottom:10%}div#wrapperForResult{position:relative}div#divForResult #deleteButton{position:absolute;bottom:-100%;left:35%}
