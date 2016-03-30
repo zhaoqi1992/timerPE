@@ -8,11 +8,14 @@ $('document').ready(function() {
 	var text = '';
 	var listNumber = 0;
 	var studentList = new Array();
-	$('#Ok').attr('disabled', 'disabled');
+	$('#Ok').addClass('disabled');
 	$('div#input_name').hide();
-	$('#show').attr('disabled', 'disabled');
-	$('#result').hide();
-	$('#grade').hide();
+	$('#show').addClass('disabled');
+	$('#divForResult').hide();
+	$('#divForGrade').hide();
+	// $('#count').attr('disabled','disabled');
+	$('#count').addClass('disabled');
+	$('#history').hide();
 
 	function Student(name, order, grade) {
 		this.name = name;
@@ -20,10 +23,13 @@ $('document').ready(function() {
 		this.grade = grade;
 	}
 
-	function getHistory() {
+	function getHistory(e) {
+		e.stopPropagation();
+		$('div#blank').css('padding-bottom', '0');
+		$('#divForResult').hide();
 		$('#history').show();
 		$('div#input_name').hide();
-		$('.modal-body p').text('确认删除？');
+		$('#mymodal.modal-body p').text('确认删除？');
 		var history = localStorage.getItem('history');
 		if (!history) {
 			history = '';
@@ -35,12 +41,14 @@ $('document').ready(function() {
 			var newTitle = '<li class="list-group-item list-group-item-success historyItem btn text-info h3">' + historyItem[j] + '</li>';
 			$('#history').append(newTitle);
 		}
-		$('li.historyItem').click(function() {
+		$('li.historyItem').click(function(e) {
+			e.stopPropagation();
+			$('#divForResult').show();
 			$('#history').hide();
 			var tableName = $(this).text();
 			var table = localStorage.getItem(tableName);
 			table = JSON.parse(table);
-			$('#result').append('<tr class="text-info h3"><td>' + tableName + '</td></tr>');
+			$('#result').append('<tr class="text-info h3"><td>' + tableName + '</td><td></td><td></td></tr>');
 			for (var i = 0; i < table.length; i++) {
 				var name = table[i].name;
 				var order = table[i].order;
@@ -48,10 +56,11 @@ $('document').ready(function() {
 				var item = "<tr class='text-info h4'><td>No." + order + '</td><td>' + grade + '</td><td>' + name + '</td></tr>';
 				$('#result').append(item);
 			}
-			$('#result').append('<button id="deleteButton" class="btn btn-danger">' + '删除' + '</button>');
+			$('#divForResult').append('<button id="deleteButton" class="btn btn-warning btn-lg">' + '删除' + '</button>');
 			$('#deleteButton').click(function(event) {
 				$('#mymodal').modal('toggle');
-				$('#continueDelete').click(function() {
+				$('#continueDelete').click(function(e) {
+					e.stopPropagation();
 					for (var i = 0; i < historyItem.length; i++) {
 						if (historyItem[i] == tableName) {
 							historyItem.splice(i, 1);
@@ -60,7 +69,8 @@ $('document').ready(function() {
 					var history = historyItem.join(',');
 					localStorage.setItem('history', history);
 					localStorage.removeItem(tableName);
-					$('.modal-body p').text('删除成功');
+					$('#mymodal.modal-body p').text('删除成功');
+					$('#showHistory').trigger('click');
 				});
 			});
 		});
@@ -96,7 +106,8 @@ $('document').ready(function() {
 		$('h1').text(text);
 
 	}
-	$('#reset').click(function() {
+	$('#reset').click(function(e) {
+		e.stopPropagation();
 		clearInterval(timerInterval);
 		msec = 0;
 		sec = 0;
@@ -105,38 +116,60 @@ $('document').ready(function() {
 		clicknumber_pause = 0;
 		listNumber = 0;
 		$('h1').text('00:00:00');
-		$('#start').text('开始');
+		$('#start span').replaceWith('<span class="glyphicon glyphicon-play"></span>');
 		$('#result').empty();
 		$('#grade').empty();
-		$('#history').empty();
-		$('#start').removeAttr('disabled');
-		$('#count').removeAttr('disabled');
-		$('#toNext').removeAttr('disabled');
+		$('#history').empty().hide();
+		$('#start').removeClass('disabled');
+		$('#toNext').removeClass('disabled');
 		studentList = new Array();
-		$('#Ok').attr('disabled', 'disabled');
+		$('#Ok').addClass('disabled');
 		$('div#input_name').hide();
-		$('#show').attr('disabled', 'disabled');
-		$('#result').hide();
-		$('#grade').hide();
+		$('#show').addClass('disabled');
+		$('#divForResult').hide();
+		$('#divForGrade').hide();
+		$('#count').addClass('disabled');
+		$('#showHistory').removeClass('disabled');
 		// window.location.reload();
+		$('#blank').unbind('click', blankClick);
+		$('div#blank').css('padding-bottom', '100%');
+		$('#input_name input#addTittle').val('');
+		$('#deleteButton').remove();
 	});
-	$('#start').click(function() {
+
+	function blankClick() {
+		$('#divForGrade').show();
+		$('#count').trigger('click');
+	}
+	$('#start').click(function(e) {
+		e.stopPropagation();
+		$('#deleteButton').remove();
+		$('#result').empty();
+		$('#showHistory').addClass('disabled');
+		$('#divForResult').hide();
 		$('#history').hide();
-		$('#show').removeAttr('disabled', 'disabled');
+		$('div#blank').css('padding-bottom', '100%');
 		if (clicknumber_pause % 2) {
+			$('#count').addClass('disabled');
+			$('#blank').unbind('click', blankClick);
+			// $('#grade').empty();
 			clearInterval(timerInterval);
 			addZeroToTime();
 			$('h1').text(text);
 
-			$(this).text('开始');
+			$('#start span').replaceWith('<span class="glyphicon glyphicon-play"></span>');
 		} else {
+			$('#count').removeClass('disabled');
+			$('#blank').click(blankClick);
 			timerInterval = setInterval(timer, 10);
-			$(this).text('结束');
+			$('#start span').replaceWith('<span class="glyphicon glyphicon-pause"></span>');
 		}
 		clicknumber_pause++;
 	});
-	$('#count').click(function() {
-		$('#grade').show();
+	$('#count').click(function(e) {
+		e.stopPropagation();
+		$('#show').removeClass('disabled');
+		$('#divForGrade').show();
 		clicknumber_count++;
 		addZeroToTime();
 		$('h1').text(text);
@@ -145,60 +178,83 @@ $('document').ready(function() {
 		// $('#result').append(grade_table);
 		$('#grade').append(grade_div);
 	});
-	$('#show').click(function() {
-		$('#result').show();
-		$('div#input_name').show();
-		$('#grade').hide();
-		$('#show').attr('disabled', 'disabled');
-		$('#count').attr('disabled', 'disabled');
-		$('#start').attr('disabled', 'disabled');
-		clearInterval(timerInterval);
-		var time = $('#grade tr .time');
-		var order = $('#grade tr .order');
-		var gradeForStudent = '<h1>' + time.eq(listNumber).text() + '</h1>';
-		$('h1').replaceWith(gradeForStudent);
-		// var item = "<tr><td>"+i+'</td><td>'+time.eq(i).text()+'</td><td>'+name+'</td></tr>';
-		// $('#result').append(item);
-		$('#toNext').click(function(event) {
-			/* Act on the event */
-			if (listNumber < time.length) {
-				var name = $('#input_name input#addName').val();
-				if (name) {
-					var item = "<tr class='text-info h4'><td>No." + (listNumber + 1) + '</td><td>' + time.eq(listNumber).text() + '</td><td>' + name + '</td></tr>';
-					$('#result').append(item);
-					var newStudent = new Student(name, listNumber + 1, time.eq(listNumber).text());
-					studentList.push(newStudent);
-					listNumber++;
-					gradeForStudent = '<h1>' + time.eq(listNumber).text() + '</h1>';
-					$('h1').replaceWith(gradeForStudent);
-					$('#input_name input#addName').val('');
+	$('#show').click(function(e) {
+		// $('#showHistory').addClass('disabled');
+		if ($('#grade td')) {
+			e.stopPropagation();
+			// addZeroToTime();
+			// $('h1').text(text);
+			// $('#showHistory').removeClass('disabled');
+			$('div#input_name').show();
+			$('#divForGrade').hide();
+			$('#show').addClass('disabled');
+			$('#count').addClass('disabled');
+			$('#blank').unbind('click', blankClick);
+			$('#start').addClass('disabled', 'disabled');
+			clearInterval(timerInterval);
+			var time = $('#grade tr .time');
+			var order = $('#grade tr .order');
+			var gradeForStudent = '<h1>' + time.eq(listNumber).text() + '</h1>';
+			$('h1').replaceWith(gradeForStudent);
+			// var item = "<tr><td>"+i+'</td><td>'+time.eq(i).text()+'</td><td>'+name+'</td></tr>';
+			// $('#result').append(item);
+			$('#toNext').click(function(e) {
+				e.stopPropagation();
+				$('#divForResult').show();
+				/* Act on the event */
+				if (listNumber < time.length) {
+					var name = $('#input_name input#addName').val();
+					if (name) {
+						var item = "<tr class='text-info h4'><td>No." + (listNumber + 1) + '</td><td>' + time.eq(listNumber).text() + '</td><td>' + name + '</td></tr>';
+						$('#result').append(item);
+						var newStudent = new Student(name, listNumber + 1, time.eq(listNumber).text());
+						studentList.push(newStudent);
+						listNumber++;
+						gradeForStudent = '<h1>' + time.eq(listNumber).text() + '</h1>';
+						$('h1').replaceWith(gradeForStudent);
+						$('#input_name input#addName').val('');
+					}
 				}
-			}
-			if (listNumber == time.length) {
-				$('#toNext').attr('disabled', 'disabled');
-				$('#Ok').removeAttr('disabled');
-			}
-		});
-		$('#Ok').click(function() {
-			if ($('#input_name input#addTittle').val()) {
-			var history = localStorage.getItem('history');
-			if (!history) {
-				history = '';
-			}
-			$('#input_name input#addName').val('');
-			$('#Ok').attr('disabled', 'disabled');
-			var newTittle = $('#input_name input#addTittle').val();
-			history += ',' + newTittle;
-			localStorage.setItem('history', history);
-			var storageStydentList = JSON.stringify(studentList);
-			localStorage.setItem(newTittle, storageStydentList);
-			// if (newTittle) {
-			// 	$('#history').append('<li class="list-group-item">' + newTittle + '</li>');
-			// }
-			$('#input_name input#addTittle').val('');
-			listNumber = 0;
-			}
-		});
+				if (listNumber == time.length) {
+					$('#toNext').addClass('disabled', 'disabled');
+					$('#Ok').removeClass('disabled');
+					gradeForStudent = '<h1>' + time.eq(listNumber - 1).text() + '</h1>';
+					$('h1').replaceWith(gradeForStudent);
+					$('#allNameOK').trigger('click');
+				}
+			});
+			$('#Ok').click(function(e) {
+				e.stopPropagation();
+				if ($('#input_name input#addTittle').val()) {
+					var history = localStorage.getItem('history');
+					if (!history) {
+						history = '';
+					}
+					$('#input_name input#addName').val('');
+					$('#Ok').addClass('disabled', 'disabled');
+					var newTittle = $('#input_name input#addTittle').val();
+					history += ',' + newTittle;
+					localStorage.setItem('history', history);
+					var storageStydentList = JSON.stringify(studentList);
+					localStorage.setItem(newTittle, storageStydentList);
+					// if (newTittle) {
+					// 	$('#history').append('<li class="list-group-item">' + newTittle + '</li>');
+					// }
+					$('#input_name input#addTittle').val('');
+					listNumber = 0;
+					$('#reset').trigger('click');
+					$('#showHistory').trigger('click');
+				}
+			});
+		}
 	});
 	$('#showHistory').click(getHistory);
+	$('#allNameOK').click(function(e){
+		e.stopPropagation();
+		$('#mymodal_next').modal({backdrop:false});
+		// $('#blank').css('padding-bottom', '0');
+		// $('#closeAllNameOK').click(function(event) {
+		// 	$('#blank').css('padding-bottom', '100%');
+		// });
+	});
 });

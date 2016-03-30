@@ -12,39 +12,41 @@
 <body id="body" class='body'>
     <div id="timer" class="text-info h1">
         <h1>00:00:00</h1>
+        <a class="btn btn-info" id="reset"><span class="glyphicon glyphicon-refresh"></span></a>
     </div>
     <div id='btn-group' class="btn-group btn-group-justified">
-        <a class="btn btn-info" id="start">开始</a>
-        <a class="btn btn-info" id="count">计数</a>
-        <a class="btn btn-info" id="show">完成</a>
-        <a class="btn btn-info" id="reset">重置</a>
-        <a class="btn btn-info" id="showHistory">历史</a>
+        <a class="btn btn-info" id="start"><span class="glyphicon glyphicon-play"></span></a>
+        <a class="btn btn-info" id="count"><span class="glyphicon glyphicon-user"></span></a>
+        <a class="btn btn-info" id="show"><span class="glyphicon glyphicon-off"></span></a>
+        <a class="btn btn-info" id="showHistory"><span class="glyphicon glyphicon-th"></span></a>
     </div>
-    <div id="input_name">
-        <div class="form-group">
-            <div class="col-md-8">
-                <input type="text" placeholder="请输入表单名" id="addTittle" class="form-control input-lg">
+    <div id="blank">
+        <div id="input_name">
+            <div class="form-group">
+                <div class="col-md-8">
+                    <input type="text" placeholder="请输入表单名" id="addTittle" class="form-control input-lg">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-8">
+                    <input type="text" placeholder="请输入姓名" id="addName" class="form-control input-lg">
+                </div>
+            </div>
+            <div class="btn-group btn-group-justified form-group">
+                <a class="btn btn-lg btn-info" id="toNext">next</a>
+                <a class="btn btn-lg btn-info" id="Ok">ok</a>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-8">
-                <input type="text" placeholder="请输入姓名" id="addName" class="form-control input-lg">
+        <div id="wrapperForResult">
+            <div class="table-responsive" id="divForResult">
+                <table id="result" class="table table-striped">
+                    <!-- <thead class="h2">成绩</thead> -->
+                </table>
             </div>
         </div>
-        <div class="btn-group btn-group-justified form-group">
-            <a class="btn btn-lg btn-info" id="toNext">next</a>
-            <a class="btn btn-lg btn-info" id="Ok">ok</a>
+        <div class="table-responsive" id="divForGrade">
+            <table id="grade" class="table table-striped"></table>
         </div>
-    </div>
-    <div id="wrapperForResult">
-        <div class="table-responsive" id="divForResult">
-            <table id="result" class="table table-striped">
-                <!-- <thead class="h2">成绩</thead> -->
-            </table>
-        </div>
-    </div>
-    <div class="table-responsive" id="divForGrade">
-        <table id="grade" class="table table-striped"></table>
     </div>
     <ul class="list-group" id="history">
         <!-- <li class="historyItem">hello</li> -->
@@ -60,14 +62,45 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="continueDelete">删除</button>
+                    <button type="button" class="btn btn-primary" id="continueDelete" data-dismiss="modal">删除</button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- <div class="modal" id="mymodal_next">
+        <div class="modal-dialog">
+            <div class="content">
+                <div class="modal-header">
+                    <button class="close" data-miss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p >所有姓名输入完毕</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" id="closeAllNameOK" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="modal" id="mymodal_next">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-infor h4">所有姓名输入完毕</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" id="closeNameAllOK">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="allNameOK"></button>
     <script type="text/javascript" src="script/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="script/bootstrap.min.js"></script>
-    <script type="text/javascript" src="script/timer.js"></script>
+    <script type="text/javascript" src="script/test.js"></script>
 </body>
 
 </html>
