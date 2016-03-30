@@ -25,6 +25,7 @@ $('document').ready(function() {
 
 	function getHistory(e) {
 		e.stopPropagation();
+		$('#flashContent').hide();
 		$('div#blank').css('padding-bottom', '0');
 		$('#divForResult').hide();
 		$('#history').show();
@@ -56,7 +57,7 @@ $('document').ready(function() {
 				var item = "<tr class='text-info h4'><td>No." + order + '</td><td>' + grade + '</td><td>' + name + '</td></tr>';
 				$('#result').append(item);
 			}
-			$('#divForResult').append('<button id="deleteButton" class="btn btn-warning btn-lg">' + '删除' + '</button>');
+			$('#divForResult').append('<button id="deleteButton" class="btn btn-warning btn-lg deleteButton">' + '删除' + '</button>');
 			$('#deleteButton').click(function(event) {
 				$('#mymodal').modal('toggle');
 				$('#continueDelete').click(function(e) {
@@ -134,7 +135,9 @@ $('document').ready(function() {
 		$('#blank').unbind('click', blankClick);
 		$('div#blank').css('padding-bottom', '100%');
 		$('#input_name input#addTittle').val('');
-		$('#deleteButton').remove();
+		$('#input_name input#addName').val('');
+		$('.deleteButton').remove();
+		$('#flashContent').show();
 	});
 
 	function blankClick() {
@@ -143,7 +146,8 @@ $('document').ready(function() {
 	}
 	$('#start').click(function(e) {
 		e.stopPropagation();
-		$('#deleteButton').remove();
+		$('#flashContent').hide();
+		$('.deleteButton').remove();
 		$('#result').empty();
 		$('#showHistory').addClass('disabled');
 		$('#divForResult').hide();
@@ -180,6 +184,7 @@ $('document').ready(function() {
 	});
 	$('#show').click(function(e) {
 		// $('#showHistory').addClass('disabled');
+		$('#flashContent').hide();
 		if ($('#grade td')) {
 			e.stopPropagation();
 			// addZeroToTime();
@@ -249,12 +254,18 @@ $('document').ready(function() {
 		}
 	});
 	$('#showHistory').click(getHistory);
-	$('#allNameOK').click(function(e){
+	$('#allNameOK').click(function(e) {
 		e.stopPropagation();
-		$('#mymodal_next').modal({backdrop:false});
+		$('#mymodal_next').modal({
+			backdrop: false
+		});
 		// $('#blank').css('padding-bottom', '0');
 		// $('#closeAllNameOK').click(function(event) {
 		// 	$('#blank').css('padding-bottom', '100%');
 		// });
+	});
+	$('#flashContent').click(function(e){
+		e.stopPropagation();
+		$('#start').trigger('click');
 	});
 });
