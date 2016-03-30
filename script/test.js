@@ -25,6 +25,7 @@ $('document').ready(function() {
 
 	function getHistory(e) {
 		e.stopPropagation();
+		$('.deleteButton').remove();
 		$('#flashContent').hide();
 		$('div#blank').css('padding-bottom', '0');
 		$('#divForResult').hide();
@@ -43,6 +44,7 @@ $('document').ready(function() {
 			$('#history').append(newTitle);
 		}
 		$('li.historyItem').click(function(e) {
+			$('.deleteButton').remove();
 			e.stopPropagation();
 			$('#divForResult').show();
 			$('#history').hide();
