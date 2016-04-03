@@ -73,6 +73,7 @@ $('document').ready(function() {
 					localStorage.setItem('history', history);
 					localStorage.removeItem(tableName);
 					$('#mymodal.modal-body p').text('删除成功');
+					$('#closeMymodal').trigger('click');
 					$('#showHistory').trigger('click');
 				});
 			});
@@ -89,7 +90,7 @@ $('document').ready(function() {
 		if (min < 10) {
 			min = '0' + min;
 		}
-		text = min + ':' + sec + ':' + msec;
+		text = min + ':' + sec + '.' + msec;
 		msec = parseInt(msec);
 		sec = parseInt(sec);
 		min = parseInt(min);
